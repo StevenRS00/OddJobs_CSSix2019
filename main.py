@@ -21,6 +21,12 @@ def run_query_posts(name, about, difficulty):
     post_key = post.put()
     print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
     print(post_key)
+    
+    def run_query_profile(fname, lname, mail, number):
+    profile = Profile(first_name = fname, last_name = lname, email = mail, phone_number = number)
+    profile_key = profile.put()
+    print("@@@@@@@@@@@@@@@@@@@")
+    print("profile_key")
         
 
 
