@@ -1,6 +1,7 @@
 import webapp2
 import os
 import jinja2
+from google.appengine.api import users
 
 jinja_current_directory = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
