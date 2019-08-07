@@ -78,6 +78,23 @@ class EnterInfoHandler(webapp2.RequestHandler):
         self.response.write('Thanks for signing up, %s! <br><a href="/">Home</a>' % oj_user.first_name)
 
 
+class PostHandler(webapp2.RequestHandler):
+    def post(self):
+        post_template = jinja_current_directory.get_template('templates/results.html')
+        title = self.request.get('title')
+        description = self.request.get('description')
+        complexity = self.request.get('complexity')
+        
+        run_query_posts(title, description, complexity)
+        
+        the_variable_dict = {"line1": title,
+                             "line2": description, 
+                             "line3" : complexity
+        }
+        self.response.write(post_template.render(the_variable_dict))      
+
 app = webapp2.WSGIApplication([
-    ('/', EnterInfoHandler)
+    ('/', home),
+    ('/post', PostHandler),
+    ('/profile', EnterInfoHandler)
 ], debug=True)
