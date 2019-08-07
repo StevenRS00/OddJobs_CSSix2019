@@ -43,7 +43,7 @@ class HomeHandler(webapp2.RequestHandler):
     def post(self):
         checkLoggedInAndRegistered(self)
         
-        profile = users.get_current_profile()
+        profile = users.get_current_user()
         
         post = Posts(
             title=self.request.get('title-first-ln'), 
@@ -77,7 +77,7 @@ class UserPostssHandler(webapp2.RequestHandler):
     def get(self):
         checkLoggedInAndRegistered(self)
         
-        profile = users.get_current_profile()
+        profile = users.get_current_user()
         email_address = profile.nickname()
         
         profile_posts = Posts.query().filter(Posts.owner == email_address).fetch()
@@ -104,7 +104,7 @@ class LoginHandler(webapp2.RequestHandler):
 
 class RegistrationHandler(webapp2.RequestHandler):
     def get(self):
-        profile = users.get_current_profile()
+        profile = users.get_current_user()
         
         registration_template = the_jinja_env.get_template('templates/registration.html')
         the_variable_dict = {
@@ -114,7 +114,7 @@ class RegistrationHandler(webapp2.RequestHandler):
         self.response.write(registration_template.render(the_variable_dict))
     
     def post(self):
-        profile = users.get_current_profile()
+        profile = users.get_current_user()
         
         #Create a new CSSI User in our database
         
