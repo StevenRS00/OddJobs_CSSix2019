@@ -1,100 +1,141 @@
 import webapp2
-import os
 import jinja2
-from google.appengine.api import users
-from models import Posts
-from models import Profile
+import os
+from models import Posts, Profile
+from google.appengine.api import profiles
 
-jinja_current_directory = jinja2.Environment(
+
+the_jinja_env = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-class home(webapp2.RequestHandler):
-    def get(self):
-        start_template=jinja_current_directory.get_template("templates/homepage.html")
-        self.response.write(start_template.render())
-        
-        
-def run_query_posts(name, about, difficulty):
-    post = Posts(title = name, description = about, complexity = difficulty)
-    post_key = post.put()
-    print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-    print(post_key)
+def checkLoggedInAndRegistered(request):
+    # Check if profile is logged in
     
-def run_query_profile(fname, lname, mail, number):
-    profile = Profile(first_name = fname, last_name = lname, email = mail, phone_number = number)
-    profile_key = profile.put()
-    print("@@@@@@@@@@@@@@@@@@@")
-    print(profile_key)
-
-class EnterInfoHandler(webapp2.RequestHandler):
-    def get(self):
-        user = users.get_current_user()
+    profile = profiles.get_current_profile()
         
-        if user:
-            email_address= user.nickname()
-            logout_link_html = '<a href="%s">sign out</a>' % (users.create_logout_url('/'))
-            self.response.write("You're logged in as " + email_address + "<br>" + logout_link_html)
-            
-            oj_user = Profile.query().filter(Profile.email == email_address).get()
-            if oj_user:
-                self.response.write('''
-                    Welcome %s %s (%s)! <br> %s <br>''' % (
-                      oj_user.first_name,
-                      oj_user.last_name,
-                      email_address,
-                      logout_link_html))  
-            else:
-                self.response.write('''
-            Welcome to our site, %s!  Please sign up! <br>
-            <form method="post" action="/">
-            First Name<input type="text" name="first_name">
-            <br>
-            Last Name<input type="text" name="last_name">
-            <br>
-            Email <input type="text" name="email"> 
-            <br>
-            Phone Number <input type="text" name="phone_number"> 
-            <br>
-            <input type="submit">
-            </form><br> %s <br>
-            ''' % (email_address, logout_link_html))
-            
-        else:
-            login_url = users.create_login_url('/')
-            login_html_element = '<a href="%s">Sign in</a>' % login_url
-            
-            self.response.write("Please log in. <b>" + login_html_element)
+    if not profile: 
+        request.redirect("/login")
+        return
+    
+    # Check if profile is registered
+       
+    email_address = profile.nickname()
+    registered_profile = Profile.query().filter(Profile.email == email_address).get()
+    
+    if not registered_profile:
+         request.redirect("/register")
+         return 
+    
 
-    def post(self):
-        user = users.get_current_user()
-        oj_user = Profile(
-            first_name=self.request.get('first_name'),
-            last_name=self.request.get('last_name'),
-            phone_number=self.request.get('phone_number'),
-            email=user.nickname())
-        oj_user.put()
-        self.response.write('Thanks for signing up, %s! <br><a href="/">Home</a>' % oj_user.first_name)
-
-
-class PostHandler(webapp2.RequestHandler):
-    def post(self):
-        post_template = jinja_current_directory.get_template('templates/results.html')
-        title = self.request.get('title')
-        description = self.request.get('description')
-        complexity = self.request.get('complexity')
+class HomeHandler(webapp2.RequestHandler):
+    def get(self):  
+        checkLoggedInAndRegistered(self)
         
-        run_query_posts(title, description, complexity)
-        
-        the_variable_dict = {"line1": title,
-                             "line2": description, 
-                             "line3" : complexity
+        the_variable_dict = {
+            "logout_url":  profiles.create_logout_url('/')
         }
-        self.response.write(post_template.render(the_variable_dict))      
+        
+        welcome_template = the_jinja_env.get_template('templates/homepage.html')
+        self.response.write(welcome_template.render(the_variable_dict))
 
+    def post(self):
+        checkLoggedInAndRegistered(self)
+        
+        profile = profiles.get_current_profile()
+        
+        post = Posts(
+            title=self.request.get('title-first-ln'), 
+            description=self.request.get('description-second-ln'),
+            owner=profile.nickname(),
+            complexity=self.request.get('post-type')
+        )
+        post_key = post.put()
+        self.response.write("Posts created: " + str(post_key) + "<br>")
+        self.response.write("<a href='/allposts'>All posts</a> | ")
+        self.response.write("<a href='/profileposts'>My posts</a>")
+        
+
+
+class AllPostssHandler(webapp2.RequestHandler):
+    def get(self):
+        checkLoggedInAndRegistered(self)
+        
+        
+        
+        all_posts = Posts.query().fetch()
+        
+        the_variable_dict = {
+            "all_posts": all_posts
+        }
+        
+        all_posts_template = the_jinja_env.get_template('templates/all_posts.html')
+        self.response.write(all_posts_template.render(the_variable_dict))
+
+class UserPostssHandler(webapp2.RequestHandler):
+    def get(self):
+        checkLoggedInAndRegistered(self)
+        
+        profile = profiles.get_current_profile()
+        email_address = profile.nickname()
+        
+        profile_posts = Posts.query().filter(Posts.owner == email_address).fetch()
+        
+        the_variable_dict = {
+            "profile_posts": profile_posts
+        }
+        
+        profile_posts_template = the_jinja_env.get_template('templates/profile_posts.html')
+        self.response.write(profile_posts_template.render(the_variable_dict))
+   
+        
+
+class LoginHandler(webapp2.RequestHandler):
+    def get(self):
+        
+        login_template = the_jinja_env.get_template('templates/login.html')
+        the_variable_dict = {
+            "login_url":  profiles.create_login_url('/')
+        }
+        
+        self.response.write(login_template.render(the_variable_dict))
+        
+
+class RegistrationHandler(webapp2.RequestHandler):
+    def get(self):
+        profile = profiles.get_current_profile()
+        
+        registration_template = the_jinja_env.get_template('templates/registration.html')
+        the_variable_dict = {
+            "email_address":  profile.nickname()
+        }
+        
+        self.response.write(registration_template.render(the_variable_dict))
+    
+    def post(self):
+        profile = profiles.get_current_profile()
+        
+        #Create a new CSSI User in our database
+        
+        cssi_profile = Profile(
+            first_name=self.request.get('first_name'), 
+            last_name =self.request.get('last_name'),
+            
+            email=profile.nickname()
+        )
+        
+        cssi_profile.put()
+        
+        self.response.write('Thanks for signing up, %s! <br><a href="/">Home</a>' %
+        cssi_profile.first_name)
+        
+                  
+    
 app = webapp2.WSGIApplication([
-    ('/', home),
-    ('/post', PostHandler),
-    ('/profile', EnterInfoHandler)
-], debug=True)
+    ('/', HomeHandler),
+    ('/allposts', AllPostssHandler), 
+    ('/profileposts', UserPostssHandler), 
+    ('/login', LoginHandler),
+    ('/register', RegistrationHandler)
+], debug=True) 
