@@ -33,9 +33,7 @@ class HomeHandler(webapp2.RequestHandler):
     def get(self):  
         checkLoggedInAndRegistered(self)
         
-        profile = users.get_current_user()
-        email_address = profile.nickname()
-        profile_posts = Posts.query().filter(Posts.owner == email_address).fetch()
+        profile_posts = Posts.query()
         
         the_variable_dict = {
             "logout_url":  users.create_logout_url('/'),
@@ -59,7 +57,7 @@ class HomeHandler(webapp2.RequestHandler):
         )
         post_key = post.put()
         self.response.write("Posts created: " + str(post_key) + "<br>")
-        self.response.write("<a href='/allposts'>All posts</a> | ")
+        self.response.write("<a href='/'>Home</a> | ")
         self.response.write("<a href='/profileposts'>My posts</a>")
         
 
