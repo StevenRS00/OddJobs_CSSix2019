@@ -5,23 +5,44 @@
 </head>
  <head2>
   <img src=https://d1vg1gqh4nkuns.cloudfront.net/i/333352531280543762/desktop/standard/400square-legacy>
-    <meta charset="UTF-8">
+    2
     <title>OddJobs</title>
  </head2>
  <body>
     <h1 class="rainbow-text">You post them, someone takes them!</h1>
     <h3>Post an OddJob</h3> 
-    <br> <br>
+    <form method=POST action="/">
+     Title: <br>
+     <input type="text" name="title-first-ln" value="">
+     <br>
+     Description: <br>
+     <input type="text" name="description-second=ln" value="">
+     <br>
+     Complexity: <br>
+     <input type="text" name="post-type" value="">
+     <br>
+     <input type="submit" value="Create Post">
+     <br><br>
+    </form>
   <div class="searchy_search">  
     Search an OddJob <br>
     <form method="POST" action="/results">
    <input type="text" value="Search"></input> <br> <br>
      <input type="submit"class="oof">
     </form>
-  </div> 
+  </div>
    <div class="listings">
     <h2>Job Listings</h2> 
-    
+    {% for post in all_posts %}
+
+     <div class="post-div" style="background: black;">
+       <h2 id="title">{{title}}</h2>
+       <h2 id="description">{{description}}</h2>
+       <h2 id="complexity">{{complexity}}</h2>
+     </div>
+     <br> <br>
+
+   {% endfor %}
    </body>   
    </div>
 </html>

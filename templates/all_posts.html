@@ -30,13 +30,14 @@
   </head>
   <body>
     {% for post in all_posts %}
-    
-        <div class="meme-div" style="background: black;">
-          <h2 id="line1">{{meme.line1}}</h2>
-          <h2 id="line2">{{meme.line2}}</h2>
-        </div>
-        <br> <br>
-    
-    {% endfor %}
+
+     <div class="post-div" style="background: black;">
+       <h2 id="title">{{title}}</h2>
+       <h2 id="description">{{description}}</h2>
+       <h2 id="complexity">{{complexity}}</h2>
+     </div>
+     <br> <br>
+
+   {% endfor %}
   </body>
 </html>
