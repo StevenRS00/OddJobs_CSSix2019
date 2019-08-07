@@ -1,0 +1,22 @@
+body {
+    background-color: firebrick;
+    
+}
+
+.searchy_search{ 
+    font-family: cursive }
+
+head2{
+    border-style:solid;
+    border-width:151px 11px 11px 11px;
+    padding-top: 20px;
+    border-color:goldenrod;
+}
+.oof{
+    color:magenta;
+}
+
+.rainbow-text {
+  background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);   -webkit-background-clip: text;
+  color: transparent;
+}
