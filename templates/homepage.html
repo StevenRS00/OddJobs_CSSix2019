@@ -38,12 +38,12 @@
    <b> <a href="{{logout_url}}">Log out</a></b>
    
    <h2>Job Listings</h2> 
-   {% for post in all_posts %}
+   {% for post in profile_posts %}
    
-   <div class="post-div" style="background: black;">
-    <h2 id="title">{{title}}</h2>
-    <h2 id="description">{{description}}</h2>
-    <h2 id="complexity">{{complexity}}</h2>
+   <div class="post-div">
+    <h2 id="title">{{post["title"]}}</h2>
+    <h2 id="description">{{post["description"]}}</h2>
+    <h2 id="complexity">{{post["complexity"]}}</h2>
    </div>
    <br> <br>
    {% endfor %}

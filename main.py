@@ -33,8 +33,13 @@ class HomeHandler(webapp2.RequestHandler):
     def get(self):  
         checkLoggedInAndRegistered(self)
         
+        profile = users.get_current_user()
+        email_address = profile.nickname()
+        profile_posts = Posts.query().filter(Posts.owner == email_address).fetch()
+        
         the_variable_dict = {
-            "logout_url":  users.create_logout_url('/')
+            "logout_url":  users.create_logout_url('/'),
+            "profile_posts": profile_posts
         }
         
         welcome_template = the_jinja_env.get_template('templates/homepage.html')
@@ -50,6 +55,7 @@ class HomeHandler(webapp2.RequestHandler):
             description=self.request.get('description-second-ln'),
             owner=profile.nickname(),
             complexity=self.request.get('post-type')
+            
         )
         post_key = post.put()
         self.response.write("Posts created: " + str(post_key) + "<br>")
@@ -81,6 +87,8 @@ class UserPostssHandler(webapp2.RequestHandler):
         email_address = profile.nickname()
         
         profile_posts = Posts.query().filter(Posts.owner == email_address).fetch()
+        print("***********************************************")
+        print(profile_posts)
         
         the_variable_dict = {
             "profile_posts": profile_posts
