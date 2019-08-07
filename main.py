@@ -2,7 +2,7 @@ import webapp2
 import jinja2
 import os
 from models import Posts, Profile
-from google.appengine.api import profiles
+from google.appengine.api import users
 
 
 the_jinja_env = jinja2.Environment(
@@ -13,7 +13,7 @@ the_jinja_env = jinja2.Environment(
 def checkLoggedInAndRegistered(request):
     # Check if profile is logged in
     
-    profile = profiles.get_current_profile()
+    profile = users.get_current_user()
         
     if not profile: 
         request.redirect("/login")
@@ -34,7 +34,7 @@ class HomeHandler(webapp2.RequestHandler):
         checkLoggedInAndRegistered(self)
         
         the_variable_dict = {
-            "logout_url":  profiles.create_logout_url('/')
+            "logout_url":  users.create_logout_url('/')
         }
         
         welcome_template = the_jinja_env.get_template('templates/homepage.html')
@@ -43,7 +43,7 @@ class HomeHandler(webapp2.RequestHandler):
     def post(self):
         checkLoggedInAndRegistered(self)
         
-        profile = profiles.get_current_profile()
+        profile = users.get_current_profile()
         
         post = Posts(
             title=self.request.get('title-first-ln'), 
@@ -77,7 +77,7 @@ class UserPostssHandler(webapp2.RequestHandler):
     def get(self):
         checkLoggedInAndRegistered(self)
         
-        profile = profiles.get_current_profile()
+        profile = users.get_current_profile()
         email_address = profile.nickname()
         
         profile_posts = Posts.query().filter(Posts.owner == email_address).fetch()
@@ -96,7 +96,7 @@ class LoginHandler(webapp2.RequestHandler):
         
         login_template = the_jinja_env.get_template('templates/login.html')
         the_variable_dict = {
-            "login_url":  profiles.create_login_url('/')
+            "login_url":  users.create_login_url('/')
         }
         
         self.response.write(login_template.render(the_variable_dict))
@@ -104,7 +104,7 @@ class LoginHandler(webapp2.RequestHandler):
 
 class RegistrationHandler(webapp2.RequestHandler):
     def get(self):
-        profile = profiles.get_current_profile()
+        profile = users.get_current_profile()
         
         registration_template = the_jinja_env.get_template('templates/registration.html')
         the_variable_dict = {
@@ -114,7 +114,7 @@ class RegistrationHandler(webapp2.RequestHandler):
         self.response.write(registration_template.render(the_variable_dict))
     
     def post(self):
-        profile = profiles.get_current_profile()
+        profile = users.get_current_profile()
         
         #Create a new CSSI User in our database
         
