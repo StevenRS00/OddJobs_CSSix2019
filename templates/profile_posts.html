@@ -1,56 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <link style="text/css" rel="stylesheet" href="/static/prof_posts.css">
-      <link href="https://fonts.googleapis.com/css?family=Libre+Caslon+Text&display=swap" rel="stylesheet">
-    <title>Your Posts</title>
-  </head>
-  <body>
-      
-      
-      <div>
-   <a href="/">
-   <img style="width: 10%" src=https://d1vg1gqh4nkuns.cloudfront.net/i/333352531280543762/desktop/standard/400square-legacy>
-    </div>
-   <b> <a href="{{logout_url}}">Log out</a></b>
-   </div>
-
-    <div class="topbar">
-        <h1>
-         Create a Post
-        </h1>
-    </div>
+    <head>
+        <link style="text/css" rel="stylesheet" href="/static/prof_posts.css">
+        <link href="https://fonts.googleapis.com/css?family=Libre+Caslon+Text&display=swap" rel="stylesheet">
+        <title>Your Posts</title>
+    </head>
     
-   <br><br>
-  <div class="fields">
-    <form method="POST" action="/profileposts">
-    Title: <br>
-    <input style="width:50%" type="text" name="title-first-ln" value="">
-    <br>
-    Description: <br>
-    <input style="height:200px;width:50%" type="text" name="description-second-ln" value="">
-    <br>
-    <br>
-    Complexity:
-    <h6> Rate the difficulty of your job from 1-10</h6> <br>
-    <input type="text" name="post-type" value="">
-    <br>
-    <input type="submit" value="Create Post">
-    <br><br>
-    </form>
-  
-   
-    {% for post in profile_posts %}
-   
-   <div class="post-div">
-    <h2 id="title">{{post["title"]}}</h2>
-    <h2 id="description">{{post["description"]}}</h2>
-    <h2 id="complexity">{{post["complexity"]}}</h2>
-   </div>
-   <br> <br>
-   {% endfor %}
-   
+    
+    <body>
+        <div>
+            <a href="/">
+                <img style="width: 10%" src=https://d1vg1gqh4nkuns.cloudfront.net/i/333352531280543762/desktop/standard/400square-legacy>
+            </a>
+        </div>
 
-  </div> 
-  </body>
+        <b><a href="{{logout_url}}">Log out</a></b>
+        
+        <div class="topbar">
+            <h1>Create a Post</h1>
+        </div>
+        
+        <br><br>
+        
+        <div class="fields">
+            <form method="POST" action="/profileposts">
+                Title: <br>
+                <input style="width:50%" type="text" name="title-first-ln" value="">
+                <br>
+                Description: <br>
+                <textarea name="description-second-ln"></textarea>
+                <br><br>
+                Complexity: <br>
+                <input type="radio" name="post-type" value="Simple" checked> Simple<br>
+                <input type="radio" name="post-type" value="Normal"> Normal<br>
+                <input type="radio" name="post-type" value="Complicated"> Complicated
+                <br>
+                <input type="submit" value="Create Post">
+                <br><br>
+            </form>
+            
+            {% for post in profile_posts %}
+                <div class="post-div">
+                    <h2 id="title">{{post["title"]}}</h2>
+                    <h2 id="description">{{post["description"]}}</h2>
+                    <h2 id="complexity">{{post["complexity"]}}</h2>
+                </div>
+                <br><br>
+            {% endfor %}
+        </div> 
+    </body>
 </html>
