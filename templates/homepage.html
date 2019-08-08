@@ -6,8 +6,9 @@
  </head>
  
  <body>
+  <div class="image">
   <img src=https://d1vg1gqh4nkuns.cloudfront.net/i/333352531280543762/desktop/standard/400square-legacy>
-  
+  </div>
   <h1 class="rainbow-text">You post them, someone takes them!</h1>
   
    <div>
@@ -20,16 +21,21 @@
    <br>
    <b> <a href="{{logout_url}}">Log out</a></b>
    
-   <h2>Job Listings</h2> 
+   <h2>Job Listings</h2>
+   <div class="steven">
    {% for post in profile_posts %}
    
-   <div class="post-div">
-    <h2 id="title">{{post["title"]}}</h2>
-    <h2 id="description">{{post["description"]}}</h2>
-    <h2 id="complexity">{{post["complexity"]}}</h2>
+   <div class="post-div" >
+    
+    <span>
+     <h2 id="title">{{post["title"]}}</h2>
+     <h2 id="description">{{post["description"]}}</h2>
+     <h2 id="complexity">{{post["complexity"]}}</h2>
+    </span>
    </div>
    <br> <br>
    {% endfor %}
+  </div>
   </div>
  </body>   
 </html>
