@@ -4,6 +4,22 @@
     <title>Your Posts</title>
   </head>
   <body>
+   <h1>Create a Post</h1>
+   
+   <br><br>
+   <form method="POST" action="/profileposts">
+   Title: <br>
+   <input type="text" name="title-first-ln" value="">
+   <br>
+   Description: <br>
+   <input type="text" name="description-second-ln" value="">
+   <br>
+   Complexity: <br>
+   <input type="text" name="post-type" value="">
+   <br>
+   <input type="submit" value="Create Post">
+   <br><br>
+   </form>
     {% for post in profile_posts %}
    
    <div class="post-div">

@@ -87,13 +87,29 @@ class UserPostssHandler(webapp2.RequestHandler):
         profile_posts = Posts.query().filter(Posts.owner == email_address).fetch()
         print("***********************************************")
         print(profile_posts)
-        
         the_variable_dict = {
             "profile_posts": profile_posts
         }
         
         profile_posts_template = the_jinja_env.get_template('templates/profile_posts.html')
         self.response.write(profile_posts_template.render(the_variable_dict))
+        
+        
+    def post(self):
+        checkLoggedInAndRegistered(self)
+        
+        profile = users.get_current_user()
+        
+        post = Posts(
+        title=self.request.get('title-first-ln'), 
+        description=self.request.get('description-second-ln'),
+        owner=profile.nickname(),
+        complexity=self.request.get('post-type')
+        
+        )
+        post_key = post.put()
+        self.redirect("/profileposts")
+
    
         
 

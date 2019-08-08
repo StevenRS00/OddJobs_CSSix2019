@@ -10,31 +10,14 @@
   
   <h1 class="rainbow-text">You post them, someone takes them!</h1>
   
-  <h3>Post an OddJob</h3> 
-  
-  <form method=POST action="/">
-   Title: <br>
-   <input type="text" name="title-first-ln" value="">
-   <br>
-   Description: <br>
-   <input type="text" name="description-second-ln" value="">
-   <br>
-   Complexity: <br>
-   <input type="text" name="post-type" value="">
-   <br>
-   <input type="submit" value="Create Post">
-   <br><br>
-  </form>
-  
-  <div class="searchy_search">  
-  Search an OddJob <br>
-  <form method="POST" action="/results">
-  <input type="text" value="Search"></input> <br> <br>
-  <input type="submit"class="oof">
-  </form>
-  </div>
+   <div>
+   <a href="/profileposts">
+   <input type="submit" value="Post an OddJob">
+   </div>
   
   <div class="listings">
+   <br>
+   <br>
    <b> <a href="{{logout_url}}">Log out</a></b>
    
    <h2>Job Listings</h2> 
@@ -50,3 +33,5 @@
   </div>
  </body>   
 </html>
+
+
