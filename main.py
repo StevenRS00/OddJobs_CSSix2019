@@ -88,6 +88,7 @@ class UserPostssHandler(webapp2.RequestHandler):
         print("***********************************************")
         print(profile_posts)
         the_variable_dict = {
+            "logout_url":  users.create_logout_url('/'),
             "profile_posts": profile_posts
         }
         

@@ -1,0 +1,15 @@
+.topbar {
+    background-color: lightgrey;
+    height: 80px;
+    color:black;
+    font-family: 'Libre Caslon Text', serif;
+    font-size: 50;
+    text-align:center;
+}
+head{
+        background-color: grey;
+}
+.fields{
+   align-items: center;
+    font-family: 'Libre Caslon Text', serif;
+}

@@ -1,25 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
+      <link style="text/css" rel="stylesheet" href="/static/prof_posts.css">
+      <link href="https://fonts.googleapis.com/css?family=Libre+Caslon+Text&display=swap" rel="stylesheet">
     <title>Your Posts</title>
   </head>
   <body>
-   <h1>Create a Post</h1>
+    <div class="topbar">
+        <h1>
+         Create a Post
+        </h1>
+    </div>
+    <div>
+   <a href="/">
+   <input type="submit" value="Home">
+    </div>
+  
+   <b> <a href="{{logout_url}}">Log out</a></b>
+    
+   </div>
    
+  
    <br><br>
-   <form method="POST" action="/profileposts">
-   Title: <br>
-   <input type="text" name="title-first-ln" value="">
-   <br>
-   Description: <br>
-   <input type="text" name="description-second-ln" value="">
-   <br>
-   Complexity: <br>
-   <input type="text" name="post-type" value="">
-   <br>
-   <input type="submit" value="Create Post">
-   <br><br>
-   </form>
+  <div class="fields">
+    <form method="POST" action="/profileposts">
+    Title: <br>
+    <input style="width:50%" type="text" name="title-first-ln" value="">
+    <br>
+    Description: <br>
+    <input style="height:200px;width:50%" type="text" name="description-second-ln" value="">
+    <br>
+    <br>
+    Complexity:
+    <h6> Rate the difficulty of your job from 1-10</h6> <br>
+    <input type="text" name="post-type" value="">
+    <br>
+    <input type="submit" value="Create Post">
+    <br><br>
+    </form>
+  
+   
     {% for post in profile_posts %}
    
    <div class="post-div">
@@ -29,5 +49,8 @@
    </div>
    <br> <br>
    {% endfor %}
+   
+
+  </div> 
   </body>
 </html>
