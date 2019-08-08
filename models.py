@@ -5,7 +5,7 @@ class Posts(ndb.Model):
     description = ndb.StringProperty(required=True)
     complexity = ndb.StringProperty(required=False)
     owner = ndb.StringProperty(required=True)
-    
+    phone = ndb.StringProperty(required=True)
 
 class Profile(ndb.Model):
     first_name = ndb.StringProperty(required=True)

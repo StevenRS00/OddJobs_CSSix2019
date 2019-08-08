@@ -29,6 +29,9 @@
                 <br>
                 Description: <br>
                 <textarea name="description-second-ln"></textarea>
+                <br>
+                Phone Number/Contact Information: <br>
+                <input style="width:50%" type="text" name="phone-number" value="">
                 <br><br>
                 Complexity: <br>
                 <input type="radio" name="post-type" value="Simple" checked> Simple<br>
@@ -41,9 +44,10 @@
             
             {% for post in profile_posts %}
                 <div class="post-div">
-                    <h2 id="title">{{post["title"]}}</h2>
-                    <h2 id="description">{{post["description"]}}</h2>
-                    <h2 id="complexity">{{post["complexity"]}}</h2>
+                    <h2 id="title">Title: {{post["title"]}}</h2>
+                    <h2 id="description">Description: {{post["description"]}}</h2>
+                    <h2 id="phone">Contact Information: {{post["phone"]}}</h2>
+                    <h2 id="complexity">Complexity: {{post["complexity"]}}</h2>
                 </div>
                 <br><br>
             {% endfor %}

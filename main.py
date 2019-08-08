@@ -52,7 +52,8 @@ class HomeHandler(webapp2.RequestHandler):
             title=self.request.get('title-first-ln'), 
             description=self.request.get('description-second-ln'),
             owner=profile.nickname(),
-            complexity=self.request.get('post-type')
+            phone = self.request.get('phone-number'),
+            complexity = self.request.get('post-type')
             
         )
         post_key = post.put()
@@ -105,6 +106,7 @@ class UserPostssHandler(webapp2.RequestHandler):
         title=self.request.get('title-first-ln'), 
         description=self.request.get('description-second-ln'),
         owner=profile.nickname(),
+        phone = self.request.get('phone-number'),
         complexity=self.request.get('post-type')
         
         )
