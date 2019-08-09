@@ -1,18 +1,27 @@
 <html>
     <head>
-        
+        <link style="text/css" rel="stylesheet" href="/static/register.css">
+        <link href="https://fonts.googleapis.com/css?family=Libre+Caslon+Text&display=swap" rel="stylesheet">
     </head>
     <body>
-        Welcome to our site, {{email_address}}!  Please sign up! <br>
+        <div class="welcome">
+            Welcome to OddJobs, {{email_address}}!  Please sign up! <br><br>
+        </div>
         
-        <form method="post" action="/register">
+        <div class="text_forms">
+            <form method="post" action="/register">
+            <br>
+            <div class="text"id="fn">First name: </div><input type="text" name="first_name">
+            <br>
+            <div class="image"><img src=https://d1vg1gqh4nkuns.cloudfront.net/i/333352531280543762/desktop/standard/400square-legacy></div> 
+            <div class "text"id="ln">Last name:</div> <input type="text" name="last_name">
+            <br>
+            <div class="text"id="pn">Phone number: </div><input type="text" name="phone_number"/>
+            <br>
+            <input type="submit">
+            </form>
+        </div>
         <br>
-        First name: <input type="text" name="first_name">
-        <br>
-        Last name: <input type="text" name="last_name">
-        <br>
-        Phone number: <input type="text" name="phone_number"/>
-        <input type="submit">
-        </form>
+        <h2 class="thanks">Thanks for signing up in advance!</h2>
     </body>
 </html>

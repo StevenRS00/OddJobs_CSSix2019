@@ -1,0 +1,30 @@
+body {
+    background-color: #FCC8C1;
+    font-family: 'Libre Caslon Text', serif;
+}
+
+.welcome {
+    font-size: 30;
+    text-align:center;
+}
+
+input[type=text] {
+  width: 20%;
+  height: 5%;
+  margin: 5px 0;
+}
+
+.text_forms {
+    font-weight: bold;
+}
+
+h2 {
+    text-align:center;
+}
+
+.image{
+  position: absolute;
+  top: 20%;
+  right: 0px;
+  width: 50%;
+}
