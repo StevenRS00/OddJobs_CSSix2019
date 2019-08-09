@@ -3,6 +3,7 @@ import jinja2
 import os
 from models import Posts, Profile
 from google.appengine.api import users
+from google.appengine.ext import db
 
 
 the_jinja_env = jinja2.Environment(
@@ -90,7 +91,7 @@ class UserPostssHandler(webapp2.RequestHandler):
         print(profile_posts)
         the_variable_dict = {
             "logout_url":  users.create_logout_url('/'),
-            "profile_posts": profile_posts
+            "profile_posts": profile_posts,
         }
         
         profile_posts_template = the_jinja_env.get_template('templates/profile_posts.html')
@@ -107,15 +108,13 @@ class UserPostssHandler(webapp2.RequestHandler):
         description=self.request.get('description-second-ln'),
         owner=profile.nickname(),
         phone = self.request.get('phone-number'),
-        complexity=self.request.get('post-type')
-        
+        complexity=self.request.get('post-type'),
         )
         post_key = post.put()
         self.redirect("/profileposts")
 
    
         
-
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
         
@@ -156,11 +155,28 @@ class RegistrationHandler(webapp2.RequestHandler):
         cssi_profile.first_name)
         
                   
+                  
+class DeletepostHandler(webapp2.RequestHandler):
+    def get(self):
+        client = users.get_current_user()
+        profile_post = Posts.query().fetch()
+        print("&&&&&&&&&&&&&&&&")
+        print(profile_post[0])
+    
+    def post(self):
+        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        postid= self.request.get("postid")
+        post=Posts.get_by_id(int(postid))
+        post.key.delete()
+        print(self.request.get("postid"))
+        self.redirect("/profileposts")
+    
     
 app = webapp2.WSGIApplication([
     ('/', HomeHandler),
     ('/allposts', AllPostssHandler), 
     ('/profileposts', UserPostssHandler), 
     ('/login', LoginHandler),
-    ('/register', RegistrationHandler)
+    ('/register', RegistrationHandler),
+    ('/deletepost', DeletepostHandler)
 ], debug=True) 
