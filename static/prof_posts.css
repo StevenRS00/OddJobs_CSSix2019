@@ -1,5 +1,11 @@
+body {
+    background-color: #FCC8C1;
+    
+}
+
 .topbar {
-    color:black;
+    background-image: linear-gradient(to left,indigo, blue, #57DCF6, green, yellow, orange, red);   -webkit-background-clip: text;
+    color: transparent;
     font-family: 'Libre Caslon Text', serif;
     font-size: 50;
     text-align:left;
@@ -10,4 +16,20 @@ head{
 .fields{
    align-items: ;
     font-family: 'Libre Caslon Text', serif;
+}
+
+.profdiv{
+    display:grid;
+    grid-template-columns:1fr;
+    grid-gap:10px;
+}
+
+
+
+.post-div{
+    border:solid;
+    border-width:5px 5px 5px 5px;
+    padding-left:5px;
+    background-color: #C1F5FC;
+    
 }

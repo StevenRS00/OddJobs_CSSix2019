@@ -42,7 +42,8 @@
                 <br><br>
             </form>
             
-            {% for post in profile_posts %}
+            <div class="profdiv">
+                {% for post in profile_posts %}
                 <div class="post-div">
                     <h2 id="title">Title: {{post["title"]}}</h2>
                     <h2 id="description">Description: {{post["description"]}}</h2>
@@ -51,6 +52,7 @@
                 </div>
                 <br><br>
             {% endfor %}
+            </div>
         </div> 
     </body>
 </html>
