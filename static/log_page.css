@@ -1,4 +1,20 @@
 body { 
     color: black;
-    font
+    background-color:#C1F5FC;
+    text-align:center;
+    font-family:cursive;
+    font-size:larger;
+}
+img{
+     display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+h1{
+    background-image: linear-gradient(to left,indigo, blue, #57DCF6, green, yellow, orange, red);   -webkit-background-clip: text;
+  color: transparent;
+}
+.bold{
+    font-weight:bold;
 }
