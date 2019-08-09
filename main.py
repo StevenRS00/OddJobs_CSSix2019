@@ -151,8 +151,7 @@ class RegistrationHandler(webapp2.RequestHandler):
         
         cssi_profile.put()
         
-        self.response.write('Thanks for signing up, %s! <br><a href="/">Home</a>' %
-        cssi_profile.first_name)
+        self.redirect('/')
         
                   
                   
